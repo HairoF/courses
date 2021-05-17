@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-between;
+
+}
+
+.header h1 {
+  /* width: 150px;
+  height: 150px; */
+  font-size: 26px;
+}
+
+.header h2 {
+  font-size: 1.2rem;
+  color: grey;
+}
+.header-list {
+  display: flex;
+  align-items: flex-end;
+  padding: 0;
+  margin-bottom: 0.5rem;
+}
+.header-list li {
+  display: block;
+  margin: 0 20px 0 20px;
+  text-decoration: none;
+}
+.link {
+  color: inherit;
+  text-decoration: inherit;
+}
+.link:hover {
+  text-decoration: inherit;
+}
