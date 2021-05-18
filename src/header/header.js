@@ -6,17 +6,17 @@ const AppHeader = ({allPosts}) => {
     return(
         <div className="header">
             <h1 className="header-title">
-                <Link className="link" to='/'>Агрегатор курсов</Link>
+                <Link className="link shadow p-2 mb-5 bg-white rounded" to='/'>Агрегатор курсов</Link>
             </h1>
-            <ul className="header-list">
+            <ul className="header-list list-group-horizontal">
                 <li>
-                    <Link className="link" to='/all/'>Все</Link>
+                    <Link className="link list-group-item" to='/all/'>Все</Link>
                 </li>
                 <li>
-                    <Link className="link" to='/programming/'>Программирование</Link>
+                    <Link className="link list-group-item" to='/programming/'>Программирование</Link>
                 </li>
                 <li>
-                    <Link className="link" to='/analysis/'>Анализ</Link>   
+                    <Link className="link list-group-item list-group-item-secondary" to='/analysis/'>Анализ</Link>   
                 </li>
             </ul>
             <h2>Всего курсов найдено: {allPosts}</h2>

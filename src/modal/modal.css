@@ -1,0 +1,28 @@
+
+.app-backdrop{
+    position: fixed;
+    background-color: rgba(0,0,0, .7);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.app-modal{
+    min-height: 500px;
+    width: 900px;
+    margin: 100px auto;
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-button{
+    cursor: pointer;
+}
