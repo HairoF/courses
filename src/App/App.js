@@ -6,6 +6,7 @@ import './App.css';
 import AppHeader from '../header';
 import PostAddForm from '../post-add-form';
 import CourseList from '../course-list';
+import Modal from '../modal';
 
 
 class App extends React.Component {
@@ -45,18 +46,43 @@ class App extends React.Component {
           "author": "Евгений Шмаргунов",
           "skills": "Работа с GIT и GitHub; Работа с данными на Python; Создание веб-сервисов на Django; Работа с базами данных; Работа с API сторонних сервисов; Юнит-тестирование; Работа с методами непрерывной интеграции — CI/CD ; Работа с ПО для автоматизации развёртывания и управления приложениями — Docker; Знание SQL для работы с Python",
           "period": "18 мая — 17 января"}
-        ]
+        ],
+        showModal: false,
+        currentShown: {}
     };
     this.deleteItem = this.deleteItem.bind(this);
+    this.onClose = this.onClose.bind(this);
+    this.itemSelected = this.itemSelected.bind(this);
   }
-
+  componentDidUpdate() {
+    console.log(this.state)
+  }
   deleteItem(id) {
-    console.log(`Перешел по курсу: ${id}`);
-}
+    this.setState({
+      showModal: !this.state.showModal
+    })
+    setTimeout(()=>{console.log(`Перешел по курсу: ${id}. Модалка в состоянии ${this.state.showModal}`);},500)
+
+  }
+  onClose() {
+    this.setState({
+      showModal: !this.state.showModal
+    })
+    // console.log(`Закрыл курс: ?{id}. Модалка в состоянии ${this.state.showModal}`);
+  }
+  
+  itemSelected(id) {
+    const course = this.state.data.find(c => c.id === id)
+    this.setState({
+      currentShown: course
+    })
+  }
 
   render() {
     const allPosts = this.state.data.length;
     const data = this.state.data;
+    const show = this.state.showModal;
+    const {currentShown} = this.state;
     return (
       <Router>
      <div className="app">
@@ -71,8 +97,15 @@ class App extends React.Component {
         </PostAddForm>
         <CourseList 
           data={data}
-          onDelete={this.deleteItem}/>
-        
+          onDelete={this.deleteItem}
+          itemSelected={this.itemSelected}
+          />
+        {show ? 
+          <Modal 
+            onClose={this.onClose}
+            course={currentShown}
+          /> 
+        : null}
      </div>
      </Router>
     )

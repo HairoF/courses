@@ -5,9 +5,13 @@ import './course-list-item.css';
 
 export default class CourseListItem extends Component {
 
+    onPush = () => {
+        this.props.itemSelected()
+        this.props.onDelete()
+    }
 
     render() {
-        const {title, author, rating,  priceWithoutStr, onDelete} = this.props;
+        const {title, author, rating,  priceWithoutStr} = this.props;
         const rate = this.props.rating ? <li className="item-info__element">Рейтинг: {rating}</li> : null; 
         return(
             <div className="app-list-item d-flex justify-content-between">
@@ -22,7 +26,7 @@ export default class CourseListItem extends Component {
             <div className="list-group-item_button d-flex justify-content-center align-items-center">
                 <button type="button" 
                         className="btn btn-outline-info"
-                        onClick={onDelete}>
+                        onClick={(e)=>this.onPush(e)}>
                     Подробнее
                 </button>  
             </div>

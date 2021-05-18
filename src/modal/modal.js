@@ -3,28 +3,39 @@ import React from 'react';
 import './modal.css';
 
 class Modal extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
     
-    getData(id) {
+    async getData(id) {
         const data = await console.log(`got this ${id}`);
-        this.setState({
-            title:"a",
-            description: "b"
-        })
     }
     render() {
-        const {title, description} = this.state;
+        const {onClose} = this.props;
+        const {title, description, fullUrl, period, skills} = this.props.course;
+        const skillArray = skills.split(';');
+        const skillElement = skillArray.map((skill) => {
+            return (
+                <li>{skill}</li>
+            )
+        })
         return (
             <div className="app-backdrop">
                 <div className="app-modal">
-                    <div className="header">
-                        <h5>{title}</h5>
-                        <span className="close-button" onClick={onClose}>&times;</span>
+                    <div className="header-modal">
+                        <div className="modal-main">
+                            <div className="modal-main_title">
+                                <h2>{title}</h2>
+                                <div className="modal-description">
+                                    {description}
+                                </div>
+                            </div>
+                            <ul className="modal-main_skills">
+                                {skillElement}
+                            </ul>
+                        </div>
+                        <span 
+                        className="close-button"
+                        onClick={onClose}>&times;</span>
                     </div>
-                    {description}
+                    description
                 </div>
             </div>
         )
