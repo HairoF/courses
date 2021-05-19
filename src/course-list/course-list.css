@@ -1,10 +1,10 @@
-.app-list {
-    margin-top: 50px;
-}
-.app-list .list-group-item {
+
+.list-group-item {
   padding: 20px 35px 10px 35px;
   margin-top: 10px;
+  background: linear-gradient(to right, rgba(175, 228, 191, 0.3), rgba(246, 241, 211,.3));
 }
 .course-list {
   margin-top: 5vh;
+  
 }

@@ -1,32 +1,102 @@
-
-.app-backdrop{
+a, a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+.modal-vindow{
     position: fixed;
-    /* background-color: rgba(0,0,0, .7); */
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.5); /* цвет фона */
-    opacity: 1; /* делаем окно видимым */
-    pointer-events: auto; /* элемент видим для событий мыши */
+    background: rgba(0,0,0,0.5);
     overflow-y: auto;
+    
 }
 
-.app-modal{
+.modal__app {
+    display: flex;
+    flex-direction: column;
     position: relative;
     width: 95%;
-
-
     margin: 50px auto;
-    background: #FFFFFF;
+    background: linear-gradient(45deg, #EECFBA, #c9c5e8);
     border-radius: 5px;
     padding: 1rem;
 }
 
-.header-modal{
-    display: block;
-    /* position: relative; */
+.modal__header{
+    background: linear-gradient(45deg, #EECFBA, #c9c5e8);
+
+    display: flex;
+    flex-direction: row;
+    min-height: 2rem;
+
 }
+
+.modal__title {
+    flex-basis: 60%;
+}
+.modal__title-title {
+    margin: 5px;
+}
+.modal__info__element {
+    padding: 0 5px 0 5px;
+}
+.modal__info__element b {
+    color: rgba(20, 120, 250, 0.7);
+}
+.modal__info__element:not(:last-child)::after {
+    padding-left: 7px;
+    content: "|";
+    color: black;
+}
+
+.modal__link a {
+    border: 1px solid  rgba(20, 120, 250, 0.7);
+    color:  rgba(20, 120, 250,.7);
+    padding: 7px;
+    border-radius: 10px
+}
+.modal__link a:hover {
+    background-color: rgba(20, 120, 250, 0.7);
+    color: rgb(255, 255, 255);
+    padding: 7px;
+    border-radius: 10px
+}
+
+.modal__link {
+    margin: auto;
+}
+
+.modal__description {
+    flex-basis: 160%;
+    max-width: 720px;
+    text-align: justify;
+    padding-right: 10px;
+    font-size: .9em;
+    line-height: 2;
+    font-family: 'Times New Roman', Times, serif;
+}
+.modal__description h3 {
+    margin-left: 5px;
+}
+.modal__description-text {
+    padding: 0 5px;
+}
+
+.modal__skills-acquired li {
+    margin: 5px 0;
+    padding: 0 5px;
+    background: linear-gradient(135deg, rgba(37,219,237) 0%,rgba(183,60,210) 100%);
+    color: black;
+    border-radius: 5px;
+}
+
+.modal__skills-acquired li {
+    font-size: .9em;
+}
+
+
 
 .close-button{
     cursor: pointer;
@@ -43,34 +113,3 @@
     opacity: .5;
     text-decoration: none;
 }
-.modal-main {
-    display: flex;
-    flex-direction: row;
-}
-.modal-description{
-    font-size: .9rem;
-    text-align: justify;
-    padding-right: 3px;
-    
-    /* scroll-behavior: smooth; */
-}
-.modal-main_title {
-    max-width: 60%;
-    /* max-height: 50%; */
-    /* overflow-y:scroll; */
-}
-.modal-main_title::-webkit-scrollbar {
-    width: 6px;               /* width of the entire scrollbar */
-}
-.modal-main_title::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey; 
-    border-radius: 10px;
-}
-.modal-main_title::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0,.7); 
-    border-radius: 10px;
-}
-/* Track */
-
-
-/* Handle */

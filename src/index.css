@@ -10,6 +10,9 @@ body {
   margin-right: auto;
   padding-left: 16px;
   padding-right: 16px;
+
+
+  background: linear-gradient(to right, rgba(161, 211, 176,.4), rgba(246, 241, 211,.3));
 }
 
 code {
