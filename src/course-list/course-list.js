@@ -26,7 +26,6 @@ class CourseList extends React.Component {
                 <li key={id} className="list-group-item">
                     <CourseListItem 
                     {...elemProps}
-                    onDelete={() => this.props.onDelete(id)}
                     itemSelected={() => this.props.itemSelected(id)}
                     />
                 </li>

@@ -7,7 +7,6 @@ export default class CourseListItem extends Component {
 
     onPush = () => {
         this.props.itemSelected()
-        this.props.onDelete()
     }
 
     render() {
