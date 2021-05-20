@@ -21,13 +21,12 @@ class CourseList extends React.Component {
     render() {
         const elements = this.props.data.map((elem) => {
             if (typeof elem === 'object' && this.isEmpty(elem)) {
-                const {id, ...elemProps} = elem;
+                const {course_ID, ...elemProps} = elem;
             return(
-                <li key={id} className="list-group-item">
+                <li key={course_ID} className="list-group-item">
                     <CourseListItem 
                     {...elemProps}
-                    onDelete={() => this.props.onDelete(id)}
-                    itemSelected={() => this.props.itemSelected(id)}
+                    itemSelected={() => this.props.itemSelected(course_ID)}
                     />
                 </li>
             )

@@ -11,7 +11,7 @@ export default class CourseListItem extends Component {
     }
 
     render() {
-        const {title, author, rating,  priceWithoutStr} = this.props;
+        const {title, author, rating,  price} = this.props;
         const rate = this.props.rating ? <li className="item-info__element">Рейтинг: {rating}</li> : null; 
         return(
             <div className="app-list-item d-flex justify-content-between">
@@ -20,7 +20,7 @@ export default class CourseListItem extends Component {
                 <ul className="item-group">
                     {rate}
                     <li className="item-info__element">Автор: {author}</li>
-                    <li className="item-info__element">Цена: {priceWithoutStr}</li>
+                    <li className="item-info__element">Цена: {price}</li>
                 </ul>
             </div>
             <div className="list-group-item_button d-flex justify-content-center align-items-center">

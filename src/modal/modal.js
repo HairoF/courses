@@ -3,15 +3,11 @@ import React from 'react';
 import './modal.css';
 
 class Modal extends React.Component {
-    
-    async getData(id) {
-        console.log('blabla')
-        const data = await console.log(`got this ${id}`);
-    }
+
     render() {
         const {onClose} = this.props;
-        const {title, description, fullUrl, period, skills, author, priceWithoutStr, rating, required_skills} = this.props.course;
-        const skillArray = skills.split(';');
+        const {title, description, url, duration, acquired_skills, author, price, rating, required_skills} = this.props.course;
+        const skillArray = acquired_skills.split(';');
         const skillElement = skillArray.map((skill,i) => {
             return (
                 <li key={i}>{skill}</li>
@@ -34,13 +30,13 @@ class Modal extends React.Component {
                             <h3 className="modal__title-title">{title}</h3>
                             <div className="modal__title-info">
                                 <span className="modal__info__element">Автор: <b>{author}</b></span>
-                                <span className="modal__info__element">Длительность: <b>{period}</b></span>
-                                <span className="modal__info__element">Цена: <b>{priceWithoutStr}</b></span>
+                                <span className="modal__info__element">Длительность: <b>{duration}</b></span>
+                                <span className="modal__info__element">Цена: <b>{price}</b></span>
                                 {rating ? <span className="modal__info__element"></span> : null}
                             </div>
                         </div>
                         <div className="modal__link">
-                            <a href={fullUrl} target="_blank" rel="noreferrer">Перейти на источник</a>
+                            <a href={url} target="_blank" rel="noreferrer">Перейти на источник</a>
                         </div>
                     </div>
                     <div className="modal__main d-flex flex-row">
