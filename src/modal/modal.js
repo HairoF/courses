@@ -3,7 +3,13 @@ import React from 'react';
 import './modal.css';
 
 class Modal extends React.Component {
-
+    componentDidMount() {
+        document.body.style.overflow = 'hidden';
+    }
+    
+    componentWillUnmount() {
+        document.body.style.overflow = 'unset';
+    }
     render() {
         const {onClose} = this.props;
         const {title, description, url, duration, acquired_skills, author, price, rating, required_skills} = this.props.course;
