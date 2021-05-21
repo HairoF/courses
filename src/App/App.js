@@ -25,6 +25,7 @@ class App extends React.Component {
 
     async onSubmitEvent(data) {
         const url = document.location.pathname;
+        console.log(`URL: ${url}, DATA: ${data}`);
         const courses = await fetchCourses(url,data);
         this.setState({data: courses})
         
@@ -42,7 +43,9 @@ class App extends React.Component {
     }
 
     async itemSelected(course_ID) {
-        const course = await fetchCourse(course_ID);
+        const url = document.location.pathname;
+        console.log(`URL: ${url}, course_ID: ${course_ID}`);
+        const course = await fetchCourse(url,course_ID);
         this.setState({
             currentShown: course
         })

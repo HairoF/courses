@@ -1,6 +1,7 @@
-const API_URL = `http://localhost:4000/api/v1`;
+const API_URL = `http://localhost:4000/api`;
 
 export async function fetchCourses(url,data){
+    console.log(`log from fetch ${API_URL}${url}`);
     return await fetch(`${API_URL}${url}`, {
         method: 'POST',
         headers: {
@@ -12,8 +13,9 @@ export async function fetchCourses(url,data){
 }
 
 
-export async function fetchCourse(id){
-    return await fetch(`${API_URL}/courses/${id}`,{
+export async function fetchCourse(url,id){
+    console.log(`log from fetch_2 ${API_URL}${url}:id`);
+    return await fetch(`${API_URL}${url}:id`,{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
