@@ -51,7 +51,26 @@ async function executeQuery(query) {
     });
 }
 
+//python
+
+async function getDataDBPython(array) {
+    const filteredArray = [];
+
+    await Promise.all(array.map(async (index) => {
+        const allCoursesID = await executeQuery(`SELECT course_ID, title, author, rating, price 
+                                                  FROM all_courses WHERE course_ID=${index+1}`)
+
+        filteredArray.push(allCoursesID[0])
+    })) 
+    
+
+        console.log(filteredArray)
+
+    return filteredArray
+}
+
 module.exports = {
     getDetailsDB,
-    getDataDB
+    getDataDB,
+    getDataDBPython
 };

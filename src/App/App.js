@@ -27,6 +27,7 @@ class App extends React.Component {
         const url = document.location.pathname;
         console.log(`URL: ${url}, DATA: ${data}`);
         const courses = await fetchCourses(url,data);
+        console.log(courses)
         this.setState({data: courses})
         
     }

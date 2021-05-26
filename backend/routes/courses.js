@@ -1,12 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const {getDataDB, getDetailsDB} = require('../database/database');
+const {getDataDB, getDetailsDB, getDataDBPython} = require('../database/database');
+//test python
+const {pyGet} = require('../childProccess/pythonShell');
+
+//
 
 router.post('/', express.json(), async function (req, res) {
 
     try {
-        const findedData = await getDataDB('all_courses',req.body);
-        res.json(findedData)
+        const course = req.body.course
+        const indexes = await pyGet(course)//array of index
+        const dataFromPython = await getDataDBPython(indexes) 
+        // console.log(dataFromPython)
+        res.json(dataFromPython)
+        // const findedData = await getDataDB('all_courses',req.body);
+        // res.json(findedData)
+
     } catch (error) {
         console.log(`BaseURL: ${req.url} Error from localhost/: ${error}`);
     }
