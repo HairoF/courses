@@ -1,4 +1,4 @@
-const { request } = require('express');
+
 const mysql = require('mysql2');
 const dbConfig = {
     host: "localhost",
@@ -53,18 +53,36 @@ async function executeQuery(query) {
 
 //python
 
-async function getDataDBPython(array) {
+async function getDataDBPython(array,skills) {
     const filteredArray = [];
 
-    await Promise.all(array.map(async (index) => {
-        const allCoursesID = await executeQuery(`SELECT course_ID, title, author, rating, price 
-                                                  FROM all_courses WHERE course_ID=${index+1}`)
-
-        filteredArray.push(allCoursesID[0])
-    })) 
+    if(skills.trim() !== '' && skills !== null && skills !== undefined) {
+        function curryingSkills(skills) {
+            return async function(num) {
+                const skillsMap = skills.split(' ');
+                let query = 'ORDER BY'
+                skillsMap.map( (element, i) => {
+                    if(i == 0) {// первый элемент без знака +
+                        query += ` CASE WHEN acquired_skills LIKE '%${element}%' THEN 1 ELSE 0 END`
+                    }
+                    else {
+                        query += ` + CASE WHEN acquired_skills LIKE '%${element}%' THEN 1 ELSE 0 END`
+                    }
+                    
+                })
+                const allCoursesID = await executeQuery(`SELECT course_ID, title, author, rating, price FROM all_courses WHERE course_ID=${parseInt(num) + 1} ${query}`)
     
+                filteredArray.push(allCoursesID[0])
+            }
+        } 
 
-        console.log(filteredArray)
+        await Promise.all( array.map( curryingSkills(skills)) ) 
+    } else {
+        await Promise.all(array.map(async (index) => {
+            const allCoursesID = await executeQuery(`SELECT course_ID, title, author, rating, price FROM all_courses WHERE course_ID=${parseInt(index) + 1}`)
+            filteredArray.push(allCoursesID[0])
+        }))
+    }
 
     return filteredArray
 }

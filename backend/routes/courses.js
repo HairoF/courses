@@ -9,9 +9,11 @@ const {pyGet} = require('../childProccess/pythonShell');
 router.post('/', express.json(), async function (req, res) {
 
     try {
-        const course = req.body.course
+        const {course, skill} = req.body;
         const indexes = await pyGet(course)//array of index
-        const dataFromPython = await getDataDBPython(indexes) 
+        console.log(`Data from python: ${indexes}`);
+
+        const dataFromPython = await getDataDBPython(indexes,skill) 
         // console.log(dataFromPython)
         res.json(dataFromPython)
         // const findedData = await getDataDB('all_courses',req.body);
@@ -21,7 +23,17 @@ router.post('/', express.json(), async function (req, res) {
         console.log(`BaseURL: ${req.url} Error from localhost/: ${error}`);
     }
 })
+router.post(`/:id`,express.json(), async (req, res) => {
 
+    try {
+        const findedData = await getDetailsDB('all_courses',req.body);
+        res.json(findedData)
+    } catch (error) {
+        console.log(`BaseURL: ${req.url} Error from localhost/:id: ${error}`);
+    }
+})
+
+/*
 router.post('/programming/', express.json(), async function (req, res) {
     try {
         const findedData = await getDataDB('programming',req.body);
@@ -40,16 +52,7 @@ router.post('/analysis/', express.json(), async function (req, res) {
     }
 })
 
-router.post(`/:id`,express.json(), async (req, res) => {
-
-    try {
-        const findedData = await getDetailsDB('all_courses',req.body);
-        res.json(findedData)
-    } catch (error) {
-        console.log(`BaseURL: ${req.url} Error from localhost/:id: ${error}`);
-    }
-})
-
+/////////id
 
 router.post(`/programming/:id`,express.json(), async (req, res) => {
     try {
@@ -69,6 +72,6 @@ router.post(`/analysis/:id`,express.json(), async (req, res) => {
         console.log(`BaseURL: ${req.path} Error from localhost/analysis/:id: ${error}`);
     }
 })
-
+*/
 
 module.exports = router;

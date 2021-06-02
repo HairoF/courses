@@ -25,7 +25,6 @@ async function pyGet(string) {
 
     const data = await runPython(string)
 
-    console.log(data)
     return data
 }
 module.exports = {pyGet};

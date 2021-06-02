@@ -34,7 +34,7 @@ class App extends React.Component {
 
     componentDidUpdate() {
         //Oops
-        // console.log(this.state)
+        console.log('Поток ерестроен...')
     }
 
     onClose() {
