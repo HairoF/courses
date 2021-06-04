@@ -10,7 +10,7 @@ export default class CourseListItem extends Component {
     }
 
     render() {
-        const {title, author, rating,  price} = this.props;
+        const {title, duration, rating,  price} = this.props;
         const rate = this.props.rating && typeof(this.props.rating) === 'number'? <li className="item-info__element">Рейтинг: {rating.toFixed(2)}</li> : null; 
         return(
             <div className="app-list-item d-flex justify-content-between">
@@ -18,8 +18,8 @@ export default class CourseListItem extends Component {
                 <span className="item-title">{title}</span>
                 <ul className="item-group">
                     {rate}
-                    <li className="item-info__element">Автор: {author}</li>
-                    <li className="item-info__element">Цена: {price}</li>
+                    <li className="item-info__element">Длительность: {duration} часов</li>
+                    <li className="item-info__element">Цена: {price} ₽</li>
                 </ul>
             </div>
             <div className="list-group-item_button d-flex justify-content-center align-items-center">

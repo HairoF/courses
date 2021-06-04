@@ -19,7 +19,9 @@ class CourseList extends React.Component {
         return false;
     }
     render() {
-        const elements = this.props.data.map((elem) => {
+        const {price,duration} = this.props;
+        const data = price ? this.props.data.sort( (a,b) => a.price - b.price) : duration ? this.props.data.sort( (a,b) => a.duration - b.duration) : this.props.data
+        const elements = data.map((elem) => {
             if (typeof elem === 'object' && this.isEmpty(elem)) {
                 const {course_ID, ...elemProps} = elem;
             return(

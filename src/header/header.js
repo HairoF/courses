@@ -2,22 +2,34 @@ import React from 'react';
 import './app-header.css';
 import {Link} from 'react-router-dom';
 
-const AppHeader = ({allPosts}) => {
+const AppHeader = ({allPosts, onDurationHandler,onPriceHandler, onFiltersDelete,price,duration}) => {
     return(
         <div className="header">
             <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between">
                 <h1 className="header-title navbar-brand">
-                    <Link className="link p-2 mb-5" to='/'>Агрегатор курсов</Link>
+                    <a className="link p-2 mb-5" href='/'>Агрегатор курсов</a>
                 </h1>
                 <ul className="header-list">
                     <li>
-                        <Link className="shadow p-2 bg-white rounded" to='/all/'>Все</Link>
+                        <Link
+                        className={`p-2 ${duration ? '' : 'bg-white'} rounded`} 
+                        to='/'
+                        onClick={() => onDurationHandler()}
+                        >По длительности</Link>
                     </li>
                     <li>
-                        <Link className="shadow p-2 bg-white rounded" to='/programming/'>Программирование</Link>
+                        <Link 
+                        className={`p-2 ${price ? '' : 'bg-white'} rounded`} 
+                        to='/'
+                        onClick={() => onPriceHandler()}
+                        >По цене</Link>
                     </li>
                     <li>
-                        <Link className="shadow p-2 bg-white rounded" to='/analysis/'>Анализ</Link>   
+                        <Link 
+                        className="shadow p-2 bg-white rounded" 
+                        to='/'
+                        onClick={() => onFiltersDelete()}
+                        >Убрать фильтры</Link>   
                     </li>
                 </ul>
                 <h2 className='count'>Всего курсов найдено: {allPosts}</h2>
