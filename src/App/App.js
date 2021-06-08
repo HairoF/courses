@@ -7,6 +7,7 @@ import AppHeader from '../header';
 import PostAddForm from '../post-add-form';
 import CourseList from '../course-list';
 import Modal from '../modal';
+import Spinner from '../spinner';
 
 import {fetchCourses, fetchCourse} from '../api';
 
@@ -18,19 +19,26 @@ class App extends React.Component {
             data: [],
             currentShown: 0,
             onDuration: false,
-            onPrice: false
+            onPrice: false,
+            onRate: false,
+            loading: false
         };
         this.onClose = this.onClose.bind(this);
         this.itemSelected = this.itemSelected.bind(this);
         this.onSubmitEvent = this.onSubmitEvent.bind(this);
         this.onDurationHandler = this.onDurationHandler.bind(this);
         this.onPriceHandler = this.onPriceHandler.bind(this);
-        this.onFiltersDelete = this.onFiltersDelete.bind(this);
+        this.onRateHandler = this.onRateHandler.bind(this);
     }
 
     async onSubmitEvent(data) {
         const url = document.location.pathname;
-        console.log(`URL: ${url}, DATA: ${data}`);
+        
+        if(data.course.trim() === '' && data.skill.trim() === '') {
+            alert("Add course or skill")
+            return
+        }
+
         const courses = await fetchCourses(url,data);
         console.log(courses)
         this.setState({data: courses})
@@ -43,25 +51,31 @@ class App extends React.Component {
         console.log(this.state)
     }
 
-    onDurationHandler() {
-        this.setState({
+    onDurationHandler(eve) {
+        console.log(eve)
+        this.setState(({onDuration})=> ({
             onPrice: false,
-            onDuration:true
-        })
+            onDuration: !onDuration,
+            onRate: false
+        }))
     }
 
-    onPriceHandler() {
-        this.setState({
-            onPrice: true,
-            onDuration:false
-        })
+    onPriceHandler(eve) {
+        console.log(eve)
+        this.setState( ({onPrice}) => ({
+            onPrice: !onPrice,
+            onDuration:false,
+            onRate: false
+        }))
     }
 
-    onFiltersDelete() {
-        this.setState({
+    onRateHandler(eve) {
+        console.log(eve)
+        this.setState( ({onRate}) => ({
             onPrice: false,
-            onDuration:false
-        })
+            onDuration:false,
+            onRate: !onRate
+        }))
     }
 
     onClose() {
@@ -85,17 +99,15 @@ class App extends React.Component {
 
     render() {
         const allPosts = this.state.data.length || 0;
-        const {currentShown,onPrice,onDuration} = this.state;
+        const {currentShown, onPrice, onDuration, onRate, loading} = this.state;
         const dataSlice = this.state.data.slice();
+        const isLoading = loading ? <Spinner/> : null;
 
         return (
             <Router>
                 <div className="app">
                     <AppHeader
                         allPosts={allPosts}
-                        onDurationHandler={this.onDurationHandler}
-                        onPriceHandler={this.onPriceHandler}
-                        onFiltersDelete={this.onFiltersDelete}
                         duration={onDuration}
                         price={onPrice}
                     />
@@ -108,8 +120,12 @@ class App extends React.Component {
                         <Route path='/analys'/>
                     </PostAddForm>
                     <CourseList
+                        onDurationHandler={this.onDurationHandler}
+                        onPriceHandler={this.onPriceHandler}
+                        onRateHandler={this.onRateHandler}
                         data={dataSlice}
                         price={onPrice}
+                        rate={onRate}
                         duration={onDuration}
                         itemSelected={this.itemSelected}
                     />

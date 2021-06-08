@@ -10,12 +10,22 @@ router.post('/', express.json(), async function (req, res) {
 
     try {
         const {course, skill} = req.body;
-        const indexes = await pyGet(course)//array of index
-        console.log(`Data from python: ${indexes}`);
+        
+        if (course.trim() === null || course.trim() == '' || course.trim() === undefined) {
+            const indexes = await pyGet(skill)
+            const dataFromPython = await getDataDBPython(indexes,skill) 
 
-        const dataFromPython = await getDataDBPython(indexes,skill) 
-        // console.log(dataFromPython)
-        res.json(dataFromPython)
+            res.json(dataFromPython)
+        } else {
+            const indexes = await pyGet(course)//array of index
+            const dataFromPython = await getDataDBPython(indexes,skill) 
+
+            res.json(dataFromPython)
+        }
+        
+        // console.log(`Data from python: ${indexes}`);
+
+
         // const findedData = await getDataDB('all_courses',req.body);
         // res.json(findedData)
 

@@ -70,7 +70,7 @@ async function getDataDBPython(array,skills) {
                     }
                     
                 })
-                const allCoursesID = await executeQuery(`SELECT course_ID, title, author, rating, price FROM all_courses WHERE course_ID=${parseInt(num) + 1} ${query}`)
+                const allCoursesID = await executeQuery(`SELECT * FROM all_courses WHERE course_ID=${parseInt(num) + 1} ${query}`)
     
                 filteredArray.push(allCoursesID[0])
             }
