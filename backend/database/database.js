@@ -36,19 +36,21 @@ async function getDetailsDB(table,id) {
 
 async function executeQuery(query) {
     const connection = mysql.createConnection(dbConfig);
-    return await new Promise(async (resolve, reject) => {
+    const data =  await new Promise(async (resolve, reject) => {
         connection.query(query, (err, results) => {
             if(err) reject(err);
 
             resolve(results);
-        });
-
+        })
         connection.end(err => {
+
             if (err) {
                 console.log("Ошибка отключения: " + err.message);
             }
         });
-    });
+    })
+
+    return data
 }
 
 //python
@@ -56,12 +58,12 @@ async function executeQuery(query) {
 async function getDataDBPython(array,skills) {
     const filteredArray = [];
 
-    if(skills.trim() !== '' && skills !== null && skills !== undefined) {
+    if(skills.trim() !== '') {
         function curryingSkills(skills) {
             return async function(num) {
                 const skillsMap = skills.split(' ');
                 let query = 'ORDER BY'
-                skillsMap.map( (element, i) => {
+                await skillsMap.map( (element, i) => {
                     if(i == 0) {// первый элемент без знака +
                         query += ` CASE WHEN acquired_skills LIKE '%${element}%' THEN 1 ELSE 0 END`
                     }
@@ -70,6 +72,7 @@ async function getDataDBPython(array,skills) {
                     }
                     
                 })
+                // console.log('end', num);
                 const allCoursesID = await executeQuery(`SELECT * FROM all_courses WHERE course_ID=${parseInt(num) + 1} ${query}`)
     
                 filteredArray.push(allCoursesID[0])
@@ -77,14 +80,27 @@ async function getDataDBPython(array,skills) {
         } 
 
         await Promise.all( array.map( curryingSkills(skills)) ) 
+        return filteredArray
     } else {
-        await Promise.all(array.map(async (index) => {
-            const allCoursesID = await executeQuery(`SELECT course_ID, title, author, rating, price FROM all_courses WHERE course_ID=${parseInt(index) + 1}`)
-            filteredArray.push(allCoursesID[0])
-        }))
+        // await Promise.all(array.map(async (index) => {
+        //     const allCoursesID = await executeQuery(`SELECT course_ID, title, author, rating, price FROM all_courses WHERE course_ID=${parseInt(index) + 1}`)
+        //     filteredArray.push(allCoursesID[0])
+        // }))
+        const query = await sliceQuery(array);
+        const allCoursesID = await executeQuery(query)
+        return allCoursesID
     }
 
-    return filteredArray
+
+}
+async function sliceQuery(array) {
+    let query = 'SELECT * FROM all_courses WHERE course_ID IN ';
+    const in_s = [];
+    
+    await array.map( (i) => in_s.push(parseInt(i)+1))
+    query += `(${in_s.join(', ')})`
+    
+    return  query
 }
 
 module.exports = {

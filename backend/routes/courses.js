@@ -11,17 +11,20 @@ router.post('/', express.json(), async function (req, res) {
     try {
         const {course, skill} = req.body;
         
-        if (course.trim() === null || course.trim() == '' || course.trim() === undefined) {
-            const indexes = await pyGet(skill)
+        // if (course.trim() == '' || course === undefined) {
+        //     const indexes = await pyGet(skill)
+            
+        //     const dataFromPython = await getDataDBPython(indexes,skill) 
+
+        //     res.json(dataFromPython)
+        // } else {
+            console.log(`Data from user: ${course}   ${skill}`);
+            const indexes = await pyGet(course || skill)//array of index
+            console.log(`Data from python: ${indexes}`);
             const dataFromPython = await getDataDBPython(indexes,skill) 
 
             res.json(dataFromPython)
-        } else {
-            const indexes = await pyGet(course)//array of index
-            const dataFromPython = await getDataDBPython(indexes,skill) 
-
-            res.json(dataFromPython)
-        }
+        // }
         
         // console.log(`Data from python: ${indexes}`);
 
