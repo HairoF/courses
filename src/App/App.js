@@ -16,11 +16,19 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            server: {
+                URL: null,
+                DATA:null
+            },
             data: [],
             currentShown: 0,
             onDuration: false,
             onPrice: false,
             onRate: false,
+            filter: {
+                from: null,
+                to: null
+            },
             loading: false
         };
         this.onClose = this.onClose.bind(this);
@@ -29,6 +37,8 @@ class App extends React.Component {
         this.onDurationHandler = this.onDurationHandler.bind(this);
         this.onPriceHandler = this.onPriceHandler.bind(this);
         this.onRateHandler = this.onRateHandler.bind(this);
+        this.onChangeFrom = this.onChangeFrom.bind(this);
+        this.onChangeTo = this.onChangeTo.bind(this);
     }
 
     async onSubmitEvent(data) {
@@ -38,17 +48,25 @@ class App extends React.Component {
             alert("Add course or skill")
             return
         }
-
-        const courses = await fetchCourses(url,data);
-        console.log(courses)
-        this.setState({data: courses})
-        
+        this.setState({
+            data: [],
+            server: {
+                URL: url,
+                DATA: data
+            },
+            loading: true
+        })
     }
 
-    componentDidUpdate() {
+    async componentDidUpdate() {
         //Oops
         console.log('Поток ерестроен...')
-        console.log(this.state)
+        if(this.state.loading) {
+            const {URL, DATA} = this.state.server;
+            fetchCourses(URL,DATA)
+            .then(courses => this.setState({data: courses, loading: false}))
+            
+        }
     }
 
     onDurationHandler(eve) {
@@ -78,6 +96,20 @@ class App extends React.Component {
         }))
     }
 
+    onChangeFrom(event) {
+        const number = event ? parseInt(event.replace(/\D/g,'')) : null;
+        this.setState({
+            filter: {from:number},
+        })
+    }
+    onChangeTo(event) {
+        const number = event ? parseInt(event.replace(/\D/g,'')) : null;
+        this.setState({
+            filter: {to:number}
+        })
+    }
+
+
     onClose() {
         this.setState({
             currentShown: 0
@@ -92,15 +124,19 @@ class App extends React.Component {
             currentShown: course
         })
     }
-
-    async componentDidMount() {
-
-    }
+    
 
     render() {
         const allPosts = this.state.data.length || 0;
         const {currentShown, onPrice, onDuration, onRate, loading} = this.state;
-        const dataSlice = this.state.data.slice();
+        const {from, to} = this.state.filter;
+        const dataSlice = from && to 
+                        ? this.state.data.filter(element => to < parseInt(element.duration) < from ) 
+                        : from 
+                        ? this.state.data.filter(element => from < parseInt(element.duration))
+                        : to
+                        ? this.state.data.filter(element => to > parseInt(element.duration))
+                        : this.state.data.slice();
         const isLoading = loading ? <Spinner/> : null;
 
         return (
@@ -119,14 +155,21 @@ class App extends React.Component {
                         <Route path='/programming/'/>
                         <Route path='/analys'/>
                     </PostAddForm>
+                    {isLoading}
                     <CourseList
                         onDurationHandler={this.onDurationHandler}
                         onPriceHandler={this.onPriceHandler}
                         onRateHandler={this.onRateHandler}
+
                         data={dataSlice}
+
                         price={onPrice}
                         rate={onRate}
                         duration={onDuration}
+
+                        onChangeFrom={this.onChangeFrom}
+                        onChangeTo={this.onChangeTo}
+
                         itemSelected={this.itemSelected}
                     />
                     {currentShown !== 0 ?

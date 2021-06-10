@@ -1,17 +1,28 @@
 import React from 'react';
 import CourseListItem from '../course-list-item';
-
+import Filters from '../filters';
 
 import './course-list.css';
 
 class CourseList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            data: null,
+            from: '',
+            to: ''
+        };
         this.isEmpty = this.isEmpty.bind(this);
-        this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
-    }
 
+    }
+    // componentDidMount() {
+    //     this.setState({
+    //         data: this.props.data
+    //     })
+    // }
+    componentDidUpdate() {
+        console.log(this.state);
+    }
     isEmpty(obj) {
         for(let key in obj)
         {
@@ -19,10 +30,9 @@ class CourseList extends React.Component {
         }
         return false;
     }
-    onChangeCheckbox(event) {
-        console.log(event.target.value)
-        this.props.onRateHandler(event.target.value)
-    }
+
+
+
     render() {
         const {price,duration,rate} = this.props;
         const data = price 
@@ -47,32 +57,20 @@ class CourseList extends React.Component {
         })
         return(
             <div className="content">
-            <div className="content__filter">
-                <h2>ФИЛЬТРЫ</h2>
-            <div className="content__filter_checkbox form-check">
-            <input className="form-check-input" checked={duration} type="checkbox" value="1" id="flexRadioDuration" onChange={(event) => this.props.onDurationHandler(event.target.checked)}/>
-            <label className="form-check-label" htmlFor="flexRadioDuration">
-                По продолжительности
-            </label>
-            </div>
-            <hr/>
-            <div className="content__filter_checkbox form-check">
-            <input className="form-check-input" checked={price} type="checkbox" value="2" id="flexRadioPrice" onChange={(event) => this.props.onPriceHandler(event.target.checked)}/>
-            <label className="form-check-label" htmlFor="flexRadioPrice">
-                По стоимости
-            </label>
-            </div>
-            <hr/>
-            <div className="content__filter_checkbox form-check">
-            <input className="form-check-input" checked={rate} type="checkbox" value="3" id="flexRadioRate" onChange={(event) => this.props.onRateHandler(event.target.checked)}/>
-            <label className="form-check-label" htmlFor="flexRadioRate">
-                По рейтингу
-            </label>
-            </div>
-            </div>
-            <ul className="content__list course-list list-group">
-                {elements}
-            </ul>
+                <Filters
+                    onDurationHandler={this.props.onDurationHandler}
+                    onPriceHandler={this.props.onPriceHandler}
+                    onRateHandler={this.props.onRateHandler}
+                    price={this.props.price}
+                    rate={this.props.rate}
+                    duration={this.props.duration}
+                    onChangeFrom={this.props.onChangeFrom}
+                    onChangeTo={this.props.onChangeTo}
+                    courseCount={data.length}
+                />
+                <ul className="content__list course-list list-group">
+                    {elements}
+                </ul>
             </div>
         )
     }

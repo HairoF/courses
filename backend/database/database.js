@@ -23,31 +23,31 @@ async function getDataDB(table,query) {
 }
 
 async function getDetailsDB(table,id) {
+    const connection = mysql.createConnection(dbConfig);
     const {courseId} = id;
 
     let QUERY_DETAILS = `SELECT * FROM ${table} 
                          WHERE course_ID = ${courseId}`;
     
-    const data =  await executeQuery(QUERY_DETAILS)  //array expected here
+    const data =  await executeQuery(QUERY_DETAILS,connection)  //array expected here
+
+    connection.end( err => {
+        if (err) console.log('ошибка закрытия соединения '+ err)
+    })
 
     return data[0];
 }
 
 
-async function executeQuery(query) {
-    const connection = mysql.createConnection(dbConfig);
+async function executeQuery(query,connection=null) {
+
     const data =  await new Promise(async (resolve, reject) => {
         connection.query(query, (err, results) => {
             if(err) reject(err);
 
             resolve(results);
         })
-        connection.end(err => {
 
-            if (err) {
-                console.log("Ошибка отключения: " + err.message);
-            }
-        });
     })
 
     return data
@@ -56,6 +56,7 @@ async function executeQuery(query) {
 //python
 
 async function getDataDBPython(array,skills) {
+    const connection = mysql.createConnection(dbConfig);
     const filteredArray = [];
 
     if(skills.trim() !== '') {
@@ -73,7 +74,7 @@ async function getDataDBPython(array,skills) {
                     
                 })
                 // console.log('end', num);
-                const allCoursesID = await executeQuery(`SELECT * FROM all_courses WHERE course_ID=${parseInt(num) + 1} ${query}`)
+                const allCoursesID = await executeQuery(`SELECT * FROM all_courses WHERE course_ID=${parseInt(num) + 1} ${query}`, connection)
     
                 filteredArray.push(allCoursesID[0])
             }
@@ -87,14 +88,19 @@ async function getDataDBPython(array,skills) {
         //     filteredArray.push(allCoursesID[0])
         // }))
         const query = await sliceQuery(array);
-        const allCoursesID = await executeQuery(query)
-        return allCoursesID
-    }
+        console.log(typeof query);
+        const allCoursesID = await executeQuery(query,connection);
 
+        connection.end( err => {
+            if (err) console.log('ошибка закрытия соединения '+ err)
+        })
+        return allCoursesID
+
+    }
 
 }
 async function sliceQuery(array) {
-    let query = 'SELECT * FROM all_courses WHERE course_ID IN ';
+    let query = 'SELECT course_ID, title, duration, rating, price FROM all_courses WHERE course_ID IN ';
     const in_s = [];
     
     await array.map( (i) => in_s.push(parseInt(i)+1))

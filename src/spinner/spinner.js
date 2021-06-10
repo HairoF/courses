@@ -1,14 +1,17 @@
 import React from 'react';
-
+import './spinner.css';
+const divStyle = {
+    marginTop: '35px',
+    position: 'absolute',
+    left: '50%'
+}
 
 const Spinner = () => {
     return (
-        <div 
-            class="d-flex justify-content-center">
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
+    <div style={divStyle}>
+    <div>Loading...</div>
+    <div className="spinner"></div>
+    </div>
     )
 }
 
