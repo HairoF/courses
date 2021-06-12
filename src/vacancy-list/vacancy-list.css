@@ -1,0 +1,18 @@
+.vacancy {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    flex-basis: 70%;
+    margin-top: 2rem;
+}
+.content__vacancy {
+    border: 1px solid black;
+    flex-basis: 50%;
+    max-height: 8rem;
+    margin-bottom: 10px;
+    overflow-y: auto;
+}
+.content__vacancy_title {
+    text-align: center;
+}

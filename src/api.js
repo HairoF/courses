@@ -1,3 +1,4 @@
+
 const API_URL = `http://localhost:4000/api`;
 
 export async function fetchCourses(url,data){
@@ -24,4 +25,9 @@ export async function fetchCourse(url,id){
     })
         .then(response => response.json());
 
+}
+
+export async function fetchJobs(url) {
+    return await fetch(`${API_URL}/`)
+    .then(response => response.json)
 }

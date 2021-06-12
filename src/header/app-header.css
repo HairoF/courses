@@ -1,7 +1,10 @@
 .header {
   background: linear-gradient(to right, rgba(169, 224, 212, 0.4), rgba(228, 247, 192, 0.3));
 }
-
+.header strong {
+  margin-right: 5px;
+  box-shadow: 5px 9px 50px 0px rgba(240, 255, 24, 0.9);
+}
 nav {
   width: 100%;
   background: inherit;

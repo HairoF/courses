@@ -61,6 +61,7 @@ export default class PostAddForm extends Component {
                     >
                     Найти
                 </button>
+
             </form>
         )
     }

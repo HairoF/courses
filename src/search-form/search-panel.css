@@ -7,3 +7,6 @@
   flex-grow: 1;
   margin-right: 3px;
 }
+.select_job button {
+  flex-basis: 25%;
+}

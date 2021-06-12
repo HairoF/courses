@@ -1,10 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const {getDataDB, getDetailsDB, getDataDBPython} = require('../database/database');
+const {getDataDB, getDetailsDB, getDataDBPython, getJobsDB,getVacancyDB} = require('../database/database');
 //test python
 const {pyGet} = require('../childProccess/pythonShell');
 
 //
+router.get('/',express.json(), async function (req,res) {
+    try {
+        const jobs = await getJobsDB();
+        res.json(jobs)
+    } catch (error) {
+        console.log('err from get '+ error)
+    }
+})
 
 router.post('/', express.json(), async function (req, res) {
 
@@ -36,6 +44,20 @@ router.post('/', express.json(), async function (req, res) {
         console.log(`BaseURL: ${req.url} Error from localhost/: ${error}`);
     }
 })
+
+router.post('/programming/', express.json(), async function (req, res) {
+    try {
+        const {vacancy} = req.body
+
+        const findedData = await getVacancyDB(vacancy);
+        console.log('array');
+        // console.log(findedData)
+        res.json(findedData)
+    } catch (error) {
+        console.log(`BaseURL2: ${req.url} Error from localhost/programming/: ${error}`);
+    }
+})
+
 router.post(`/:id`,express.json(), async (req, res) => {
 
     try {

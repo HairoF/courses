@@ -8,8 +8,10 @@ import PostAddForm from '../post-add-form';
 import CourseList from '../course-list';
 import Modal from '../modal';
 import Spinner from '../spinner';
+import SearchPanel from '../search-form';
 
 import {fetchCourses, fetchCourse} from '../api';
+
 
 
 class App extends React.Component {
@@ -21,6 +23,7 @@ class App extends React.Component {
                 DATA:null
             },
             data: [],
+            vacancy: [],
             currentShown: 0,
             onDuration: false,
             onPrice: false,
@@ -39,6 +42,7 @@ class App extends React.Component {
         this.onRateHandler = this.onRateHandler.bind(this);
         this.onChangeFrom = this.onChangeFrom.bind(this);
         this.onChangeTo = this.onChangeTo.bind(this);
+        this.onSearchJob = this.onSearchJob.bind(this);
     }
 
     async onSubmitEvent(data) {
@@ -124,9 +128,20 @@ class App extends React.Component {
             currentShown: course
         })
     }
+
+    async onSearchJob(vacancy) {
+
+        const url = '/programming'
+        const courseVacancy = await fetchCourses(url,{vacancy:vacancy});
+        this.setState({
+            vacancy: courseVacancy
+        })
+        // console.log(this.state);
+    }
     
 
     render() {
+        const {vacancy} = this.state;
         const allPosts = this.state.data.length || 0;
         const {currentShown, onPrice, onDuration, onRate, loading} = this.state;
         const {from, to} = this.state.filter;
@@ -151,17 +166,18 @@ class App extends React.Component {
                         onSubmitEvent={this.onSubmitEvent}
                     >
                         <Route path='/' exact/>
-                        <Route path='/all/'/>
                         <Route path='/programming/'/>
-                        <Route path='/analys'/>
                     </PostAddForm>
+                    <SearchPanel onSearch={this.onSearchJob}/>
                     {isLoading}
+
                     <CourseList
                         onDurationHandler={this.onDurationHandler}
                         onPriceHandler={this.onPriceHandler}
                         onRateHandler={this.onRateHandler}
 
                         data={dataSlice}
+                        vacancy={vacancy}
 
                         price={onPrice}
                         rate={onRate}

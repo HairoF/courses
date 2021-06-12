@@ -1,7 +1,7 @@
 import React from 'react';
 import CourseListItem from '../course-list-item';
 import Filters from '../filters';
-
+import VacancyList from '../vacancy-list/vacancy-list';
 import './course-list.css';
 
 class CourseList extends React.Component {
@@ -34,7 +34,10 @@ class CourseList extends React.Component {
 
 
     render() {
+        const {vacancy} = this.props
+
         const {price,duration,rate} = this.props;
+        const isData = this.props.data.length > 0 ? true : false;
         const data = price 
                     ? this.props.data.sort( (a,b) => a.price - b.price) 
                     : duration 
@@ -68,9 +71,13 @@ class CourseList extends React.Component {
                     onChangeTo={this.props.onChangeTo}
                     courseCount={data.length}
                 />
-                <ul className="content__list course-list list-group">
+
+                {isData 
+                ? <ul className="content__list course-list list-group">
                     {elements}
-                </ul>
+                  </ul>
+                : <VacancyList  vacancy={vacancy} itemSelected={this.props.itemSelected}/>}
+
             </div>
         )
     }

@@ -7,6 +7,20 @@ const dbConfig = {
     password: "admin"
 };
 
+async function getJobsDB() {
+    const connection = mysql.createConnection(dbConfig);
+        let QUERY = `SELECT ID, name FROM jobs`;
+
+        const data =  await executeQuery(QUERY,connection)
+
+    connection.end( err => {
+        if (err) console.log('ошибка закрытия соединения '+ err)
+    })
+
+    return data
+
+}
+
 async function getDataDB(table,query) {
     const {course, skill} = query;
     if (course || skill) {
@@ -99,6 +113,32 @@ async function getDataDBPython(array,skills) {
     }
 
 }
+
+async function getVacancyDB(vacancyID) {
+    const connection = mysql.createConnection(dbConfig);
+
+    const query = `SELECT competition FROM jobs WHERE ID=${vacancyID}` 
+    const data = await executeQuery(query,connection);
+    const competitionList = data[0].competition.split('; ');
+    console.log(competitionList)
+
+    let beliberda = [];
+    for await (let skill of competitionList) {
+        const query = `SELECT course_ID, title, duration, rating, price FROM all_courses WHERE title LIKE'%${skill}%' LIMIT 1`
+        const vacancyList = await executeQuery(query, connection)
+        // const obj = {skill: list}
+        if (vacancyList.length > 0) {
+            beliberda.push({skillName: skill, skillsList :  vacancyList})
+        }
+    }
+    connection.end( err => {
+        if (err) console.log('ошибка закрытия соединения '+ err)
+    })
+    
+    return beliberda
+}
+
+
 async function sliceQuery(array) {
     let query = 'SELECT course_ID, title, duration, rating, price FROM all_courses WHERE course_ID IN ';
     const in_s = [];
@@ -110,7 +150,9 @@ async function sliceQuery(array) {
 }
 
 module.exports = {
+    getJobsDB,
     getDetailsDB,
     getDataDB,
+    getVacancyDB,
     getDataDBPython
 };
