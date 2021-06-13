@@ -124,7 +124,7 @@ async function getVacancyDB(vacancyID) {
 
     let beliberda = [];
     for await (let skill of competitionList) {
-        const query = `SELECT course_ID, title, duration, rating, price FROM all_courses WHERE title LIKE'%${skill}%' LIMIT 1`
+        const query = `SELECT course_ID, title, duration, rating, price FROM all_courses WHERE title LIKE'%${skill}%' LIMIT 3`
         const vacancyList = await executeQuery(query, connection)
         // const obj = {skill: list}
         if (vacancyList.length > 0) {

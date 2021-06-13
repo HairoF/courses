@@ -1,3 +1,26 @@
-.content__vacancy__main p {
-
+.vacancy__main__title {
+    margin: 0px 0 0 5px;
+    color: darkblue;
+}
+.vacancy__main__info {
+    margin: 0px 0 0 5px;
+}
+.vacancy__main__info img {
+    max-width: 25px;
+    max-height: 25px;
+}
+.vacancy__main__info span {
+    margin-right: 15px;
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(49, 90, 11);
+}
+.vacancy__main__button {
+    position: absolute;
+    right: 0;
+    top: 10%;
+}
+.vacancy__main_li {
+    margin: 5px 0 5px 0;
+    position: relative;
+    border-left: 2px solid rgb(223, 38, 223);
 }
