@@ -129,10 +129,10 @@ class App extends React.Component {
         })
     }
 
-    async onSearchJob(vacancy) {
-
+    async onSearchJob(vacancyAndSkills) {
+        console.log(vacancyAndSkills)
         const url = '/programming'
-        const courseVacancy = await fetchCourses(url,{vacancy:vacancy});
+        const courseVacancy = await fetchCourses(url,vacancyAndSkills);
         this.setState({
             vacancy: courseVacancy
         })

@@ -114,12 +114,12 @@ async function getDataDBPython(array,skills) {
 
 }
 
-async function getVacancyDB(vacancyID) {
+async function getVacancyDB(vacancyName, skillsLearned) {
     const connection = mysql.createConnection(dbConfig);
 
-    const query = `SELECT competition FROM jobs WHERE ID=${vacancyID}` 
+    const query = `SELECT competition FROM jobs WHERE name='${vacancyName}'` 
     const data = await executeQuery(query,connection);
-    const competitionList = data[0].competition.split('; ');
+    const competitionList = await deleteLearnedSkills(data,skillsLearned);
     console.log(competitionList)
 
     let beliberda = [];
@@ -149,6 +149,25 @@ async function sliceQuery(array) {
     return  query
 }
 
+async function deleteLearnedSkills(skillsFromDB, learnedSkills) {
+    const skilSplited = learnedSkills.split(' ') //learned
+    let competList = skillsFromDB[0].competition.split('; ');
+    for await(skill of skilSplited) {
+        const index = competList.findIndex( el => el === skill);
+
+        if (index !== -1) {
+            const befor = competList.slice(0,index);
+            const after = competList.slice(index + 1);
+            const ba = [...befor,...after]
+
+            competList = ba
+        }
+    }
+
+    return competList
+}
+
+// console.log()
 module.exports = {
     getJobsDB,
     getDetailsDB,

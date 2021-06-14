@@ -8,13 +8,13 @@ export default class VacancyList extends Component {
     render() {
         
         const vacancy = this.props.vacancy;
-        console.log(vacancy)
+
 
         const vacancyLi = vacancy.map((job,i) => {
             const {skillName, skillsList} = job;
 
             return (
-                <li key={`content__vacancy${i}`}>
+                <li key={`content__vacancy${i}`} className="vacancy__li">
                     <div className="content__vacancy">
                         <div className="content__vacancy_title">Курсы для получения навыков по {skillName}</div>
                             <VacancyListItem skill={skillsList} itemSelected={this.props.itemSelected}/>

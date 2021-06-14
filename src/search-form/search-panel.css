@@ -1,6 +1,22 @@
 .search-panel {
   margin: 1rem 0;
 }
+.select_job {
+  display: flex;
+  flex-direction: row;
+}
+.select__job__vacancy {
+  flex-basis: 50%;
+}
+
+.select__job__competition {
+  flex-basis: 32%;
+  margin-left: 5px;
+}
+.select__job__button {
+  flex-basis: 10%;
+}
+
 
 .search-panel .search-input {
   width: auto;
