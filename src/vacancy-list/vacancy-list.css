@@ -36,3 +36,9 @@
     margin-bottom: 1rem;
     color: darkturquoise;
 }
+.vacancy__message {
+    border: 2px dotted blue;
+    border-radius: 15px;
+    text-align: center;
+    padding: 2px 2px;
+}

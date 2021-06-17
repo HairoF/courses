@@ -34,7 +34,7 @@ class CourseList extends React.Component {
 
 
     render() {
-        const {vacancy} = this.props
+        const {vacancy, queryVacancy, competitionString} = this.props
 
         const {price,duration,rate} = this.props;
         const isData = this.props.data.length > 0 ? true : false;
@@ -76,7 +76,12 @@ class CourseList extends React.Component {
                 ? <ul className="content__list course-list list-group">
                     {elements}
                   </ul>
-                : <VacancyList  vacancy={vacancy} itemSelected={this.props.itemSelected}/>}
+                : <VacancyList 
+                    queryVacancy={queryVacancy} 
+                    competitionString={competitionString}  
+                    vacancy={vacancy} 
+                    itemSelected={this.props.itemSelected}/>
+                }
 
             </div>
         )

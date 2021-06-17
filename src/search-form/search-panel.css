@@ -6,15 +6,15 @@
   flex-direction: row;
 }
 .select__job__vacancy {
-  flex-basis: 50%;
+  flex-basis: 30%;
 }
 
 .select__job__competition {
-  flex-basis: 32%;
+  flex-basis: 52%;
   margin-left: 5px;
 }
 .select__job__button {
-  flex-basis: 10%;
+ max-width: 10rem; 
 }
 
 

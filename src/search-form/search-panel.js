@@ -59,7 +59,7 @@ export default class SearchPanel extends Component {
             <input
                 type="text"
                 name="skill"
-                placeholder="Напишите навыки, которыми владеете"
+                placeholder="Напишите навыки, которыми вы уже овладели"
                 className="form-control new-post-label select__job__competition"
                 onChange={this.onVacancySkillChange}
                 value={this.state.learnedSkills}

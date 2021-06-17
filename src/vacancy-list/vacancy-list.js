@@ -7,8 +7,8 @@ export default class VacancyList extends Component {
 
     render() {
         
-        const vacancy = this.props.vacancy;
-
+        const {vacancy, queryVacancy, competitionString} = this.props;
+        console.log(vacancy)
 
         const vacancyLi = vacancy.map((job,i) => {
             const {skillName, skillsList} = job;
@@ -23,9 +23,20 @@ export default class VacancyList extends Component {
             )
         })
         return (
-            <ul className="vacancy">
-                {vacancyLi}
-            </ul>
+             <div className="vacancy">
+                 {queryVacancy 
+                 ? <div>
+                    <div className="alert alert-warning" role="alert">
+                        <h4 className="alert-heading">Недостаточно знаний</h4>
+                        <p>Для работы {queryVacancy}(ом) большинство работадателей c HH указали следующие необходимые навыки: {competitionString}</p>
+                    </div>
+                    <ul className="vacancy">
+                        {vacancyLi}
+                    </ul>
+                 </div>
+                 : null}
+            </div>
         )
     }
-}
+} // <div className="vacancy">
+// <p className='vacancy__message'>Для работы Тестировщик(ом) вам не хвататет следующих навыков: js, react, redux</p>

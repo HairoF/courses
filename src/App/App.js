@@ -24,6 +24,8 @@ class App extends React.Component {
             },
             data: [],
             vacancy: [],
+            vacancyName: '',
+            competitionString: '',
             currentShown: 0,
             onDuration: false,
             onPrice: false,
@@ -74,7 +76,7 @@ class App extends React.Component {
     }
 
     onDurationHandler(eve) {
-        console.log(eve)
+        // console.log(eve)
         this.setState(({onDuration})=> ({
             onPrice: false,
             onDuration: !onDuration,
@@ -83,7 +85,7 @@ class App extends React.Component {
     }
 
     onPriceHandler(eve) {
-        console.log(eve)
+        // console.log(eve)
         this.setState( ({onPrice}) => ({
             onPrice: !onPrice,
             onDuration:false,
@@ -92,7 +94,7 @@ class App extends React.Component {
     }
 
     onRateHandler(eve) {
-        console.log(eve)
+        // console.log(eve)
         this.setState( ({onRate}) => ({
             onPrice: false,
             onDuration:false,
@@ -130,18 +132,22 @@ class App extends React.Component {
     }
 
     async onSearchJob(vacancyAndSkills) {
-        console.log(vacancyAndSkills)
+        // console.log(vacancyAndSkills)
         const url = '/programming'
-        const courseVacancy = await fetchCourses(url,vacancyAndSkills);
+        const {beliberda, competitionList} = await fetchCourses(url,vacancyAndSkills);
+        const competitionString = competitionList.join(', ')
         this.setState({
-            vacancy: courseVacancy
+            vacancy: beliberda,
+            competitionString: competitionString,
+            vacancyName: vacancyAndSkills.queryVacancy
         })
+
         // console.log(this.state);
     }
     
 
     render() {
-        const {vacancy} = this.state;
+        const {vacancy, vacancyName, competitionString} = this.state;
         const allPosts = this.state.data.length || 0;
         const {currentShown, onPrice, onDuration, onRate, loading} = this.state;
         const {from, to} = this.state.filter;
@@ -168,6 +174,10 @@ class App extends React.Component {
                         <Route path='/' exact/>
                         <Route path='/programming/'/>
                     </PostAddForm>
+                    <div className="message">
+                        <hr/>
+                        <div className="message__navigate alert alert-warning">Поиск по вакансии</div>
+                    </div>
                     <SearchPanel onSearch={this.onSearchJob}/>
                     {isLoading}
 
@@ -177,7 +187,10 @@ class App extends React.Component {
                         onRateHandler={this.onRateHandler}
 
                         data={dataSlice}
+
                         vacancy={vacancy}
+                        queryVacancy={vacancyName}
+                        competitionString={competitionString}
 
                         price={onPrice}
                         rate={onRate}

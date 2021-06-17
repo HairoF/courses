@@ -16,9 +16,7 @@ margin-left: 5px;
 .content__filter_checkbox:not(:first-child) {
     margin-top: 1rem;
 }
-hr {
-    margin-right: 4rem;
-}
+
 .check__input {
     display: inline;
     max-width: 100px;

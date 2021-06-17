@@ -29,3 +29,16 @@
     transform: rotate(360deg);
   }
 }
+hr {
+  margin: 2rem 0;
+}
+.message {
+  position: relative;
+}
+.message__navigate {
+  position: absolute;
+  left: 40%;
+  top: -0.78rem;
+  background: linear-gradient(to right, rgba(205, 243, 234, 0.4), rgba(224, 238, 196, 0.3));
+  padding: 0 10px;
+}

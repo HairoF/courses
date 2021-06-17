@@ -102,7 +102,7 @@ async function getDataDBPython(array,skills) {
         //     filteredArray.push(allCoursesID[0])
         // }))
         const query = await sliceQuery(array);
-        console.log(typeof query);
+        // console.log(typeof query);
         const allCoursesID = await executeQuery(query,connection);
 
         connection.end( err => {
@@ -120,7 +120,7 @@ async function getVacancyDB(vacancyName, skillsLearned) {
     const query = `SELECT competition FROM jobs WHERE name='${vacancyName}'` 
     const data = await executeQuery(query,connection);
     const competitionList = await deleteLearnedSkills(data,skillsLearned);
-    console.log(competitionList)
+    // console.log(competitionList)
 
     let beliberda = [];
     for await (let skill of competitionList) {
@@ -135,7 +135,7 @@ async function getVacancyDB(vacancyName, skillsLearned) {
         if (err) console.log('ошибка закрытия соединения '+ err)
     })
     
-    return beliberda
+    return {beliberda, competitionList}
 }
 
 
