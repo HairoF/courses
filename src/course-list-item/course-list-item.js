@@ -18,7 +18,7 @@ export default class CourseListItem extends Component {
                 <span className="item-title">{title}</span>
                 <ul className="item-group">
                     {rate}
-                    <li className="item-info__element">Длительность: {duration} часов</li>
+                    <li className="item-info__element">Длительность: {duration} ч</li>
                     <li className="item-info__element">Цена: {price} ₽</li>
                 </ul>
             </div>

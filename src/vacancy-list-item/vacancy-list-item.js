@@ -19,8 +19,8 @@ export default class VacancyListItem extends Component {
                 <li key={course_ID} className="vacancy__main_li">
                     <div className='vacancy__main__title'>{title}</div>
                     <div className='vacancy__main__info'>
-                        <span>По времени: {duration} часов</span>
-                        <span>По цене: {price} ₽</span>
+                        <span>Длительность: {duration} ч</span>
+                        <span>Цена: {price} ₽</span>
                         <span>Рейтинг: {rateFixed}</span>
                         <button type='button' className='vacancy__main__button btn btn-outline-info' onClick={() => this.onCourse(course_ID)}>Link</button>
                     </div>

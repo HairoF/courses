@@ -6,9 +6,13 @@
     flex-basis: 70%;
     margin-top: 2rem;
 }
+.vacancy i {
+    color: crimson;
+}
 
 .vacancy__li {
     position: relative;
+    margin-bottom: 15px;
 }
 .vacancy__li::before {
         content: "";

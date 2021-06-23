@@ -28,7 +28,7 @@ export default class VacancyList extends Component {
                  ? <div>
                     <div className="alert alert-warning" role="alert">
                         <h4 className="alert-heading">Недостаточно знаний</h4>
-                        <p>Для работы {queryVacancy}(ом) большинство работадателей c HH указали следующие необходимые навыки: {competitionString}</p>
+                        <p>Для работы <i>{queryVacancy}ом</i> большинство работадателей c HeadHunter указали следующие необходимые навыки: <i>{competitionString}</i></p>
                     </div>
                     <ul className="vacancy">
                         {vacancyLi}

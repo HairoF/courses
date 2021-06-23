@@ -137,6 +137,7 @@ class App extends React.Component {
         const {beliberda, competitionList} = await fetchCourses(url,vacancyAndSkills);
         const competitionString = competitionList.join(', ')
         this.setState({
+            data: [],
             vacancy: beliberda,
             competitionString: competitionString,
             vacancyName: vacancyAndSkills.queryVacancy
@@ -168,16 +169,14 @@ class App extends React.Component {
                         duration={onDuration}
                         price={onPrice}
                     />
+                    <Message name={"курсам"} first/>
                     <PostAddForm
                         onSubmitEvent={this.onSubmitEvent}
                     >
                         <Route path='/' exact/>
                         <Route path='/programming/'/>
                     </PostAddForm>
-                    <div className="message">
-                        <hr/>
-                        <div className="message__navigate alert alert-warning">Поиск по вакансии</div>
-                    </div>
+                    <Message name={"вакансии"}/>
                     <SearchPanel onSearch={this.onSearchJob}/>
                     {isLoading}
 
@@ -214,3 +213,16 @@ class App extends React.Component {
 }
 
 export default App;
+
+function Message(props) {
+    const pr = props.name
+    let clName = "message__navigate alert alert-warning";
+    if(props.first) clName += " m_n1";
+
+    return (
+        <div className="message">
+        <hr/>
+        <div className={clName}>Поиск по {pr}</div>
+        </div>
+    )
+}

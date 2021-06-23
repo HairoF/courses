@@ -61,7 +61,7 @@ export default class Filters extends Component {
                         type="checkbox" value="4" id="flexCoursera" 
                         onChange={(event) => this.props.onCOURSERAHandler(event.target.checked)}/>
                 <label className="form-check-label" htmlFor="flexCoursera">
-                    Только <span className="text-family">COURSERA</span>
+                    Только <span className="text-family">Coursera</span>
                 </label>
             </div>
             <div className="content__filter_checkbox form-check">
@@ -69,7 +69,7 @@ export default class Filters extends Component {
                         type="checkbox" value="5" id="flexUdemy" 
                         onChange={(event) => this.props.onUDEMYHandler(event.target.checked)}/>
                 <label className="form-check-label" htmlFor="flexUdemy">
-                    Только <span className="text-family">UDEMY</span>
+                    Только <span className="text-family">Udemy</span>
                 </label>
             </div>
             <div className="content__filter_checkbox form-check">
@@ -77,7 +77,7 @@ export default class Filters extends Component {
                         type="checkbox" value="6" id="flexNetology" 
                         onChange={(event) => this.props.onNETOLOGYHandler(event.target.checked)}/>
                 <label className="form-check-label" htmlFor="flexNetology">
-                    Только <span className="text-family">НЕТОЛОГИЯ</span>
+                    Только <span className="text-family">Netology</span>
                 </label>
             </div>
         </div>

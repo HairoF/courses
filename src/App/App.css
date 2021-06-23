@@ -36,9 +36,13 @@ hr {
   position: relative;
 }
 .message__navigate {
+  /* margin-left: 50%; */
   position: absolute;
   left: 40%;
-  top: -0.78rem;
+  top: -0.81rem;
   background: linear-gradient(to right, rgba(205, 243, 234, 0.4), rgba(224, 238, 196, 0.3));
   padding: 0 10px;
+}
+.m_n1 {  
+  left: 41%;
 }
