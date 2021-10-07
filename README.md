@@ -1,10 +1,30 @@
-# Getting Started with Create React App
+Сайт агрегатор IT курсов, с возможностью интеллектуального поиска среди всех курсов.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Поиск курсов осуществляется по платформам Udemy и Netology. Происходит парсинг курсов, и добавление в базу данных.
+  Производится парсинг по курсов для позиций: Название, содержание, автор, получаемые навыки, требуемые навыки, цена, рейтинг)
+  Добавляется в единую базу. 
 
-## Available Scripts
+С помощью Gensim библиотеки на Python выполняется латентно-семантический анализ, и отдается файл на сервер, с проанализированными по содержанию, курсами. 
 
-In the project directory, you can run:
+Интеллектуальный поиск реализован следующим образом:
+  1.Клиент посылает запрос с "темой" и получает список курсов подходящих по "содержанию" а не по названию (наиболее содежательные курсы оказываются вверху списка).
+  2.Сервер подключает файл с проанилизованными курсами, добавляет "тему" запроса пользователя и запускает дочерний процесс на Python с новыми данными.
+  3.Python код отдает массив отсортированных по соответсвию теме.
+  4.Сервер из БД получает подробную информацию по каждому курсу и отдает клиенту.
+  5.Клиент может прочитать всю доступную информацию о курсе не покидая сайт-агрегатор.
+  
+Интеллектуальный поиск с учётом требований к вакансии:
+  1. Клиент выбирает из предложенного списка вакансию на которую он рассчитывет найти работу и курсы для овладения навыками, требуемыми для данной вакансии.
+      + может указать навыки, которыми он уже владеет. Таким образом исключается при выдаче изученные навыки.
+  2. Сервер получает из БД_2 наиболее часто указываемые работодателямм навыки для данной вакансии. И для каждого навыка предлагает 5 курсов для изучения.
+      + если были навыки, уже изученные соискателем, то они исключаются из выдачи.
+  3. Клиент получает сообщение о том, какие навыки следует изучить по данной вакансии, и выводит список из 5 курсов для каждого навыка.
+
+Наиболее часто указываемые навыки для БД_2 парсятся на Python из сайта HH через их API. Рассматривается 2000 вакансии. Отбираются 10 наиболее часто указываемых.
+
+Клиент React
+Сервер NodeJs
+БазаMySQL
 
 ### `npm start`
 
@@ -14,57 +34,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
